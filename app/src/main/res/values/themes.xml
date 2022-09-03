@@ -1,0 +1,10 @@
+<resources>
+    <!-- Base application theme. -->
+    <style name="Base.Theme.WeatherAncic" parent="Theme.Material3.DynamicColors.Light">
+        <item name="colorPrimary">@color/white</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.WeatherAncic" parent="Base.Theme.WeatherAncic" />
+</resources>
