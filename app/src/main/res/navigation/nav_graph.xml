@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/weather_fragment">
+    app:startDestination="@id/forecast_fragment">
 
     <fragment
-        android:id="@+id/weather_fragment"
-        android:name="ancic.karim.weatherancic.feature.weather.WeatherFragment"
-        tools:layout="@layout/fragment_weather" />
+        android:id="@+id/forecast_fragment"
+        android:name="ancic.karim.weatherancic.feature.forecast.ForecastFragment"
+        tools:layout="@layout/fragment_forecast" />
 
 </navigation>

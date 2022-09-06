@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">WeatherAncic</string>
+
+    <!-- General -->
+    <string name="error_no_internet">No Internet connection</string>
+
+    <!-- Forecast -->
+    <string name="forecast_label_today">Danas, %s</string>
+    <string name="forecast_label_current_temperature">Trenutna temperatura: %s</string>
+    <string name="forecast_label_min_temperature">Najmanja temperatura: %s</string>
+    <string name="forecast_label_max_temperature">Najveća temperatura: %s</string>
 </resources>

@@ -1,5 +1,6 @@
-package ancic.karim.weatherancic
+package ancic.karim.weatherancic.feature.main
 
+import ancic.karim.weatherancic.R
 import ancic.karim.weatherancic.databinding.ActivityMainBinding
 import ancic.karim.weatherancic.extensions.nonNull
 import ancic.karim.weatherancic.utils.LocationUtil
