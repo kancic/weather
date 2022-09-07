@@ -15,6 +15,15 @@ class ForecastRepository @Inject constructor(
     private val remoteDataSource: ForecastRemoteDataSource,
     private val forecastConverter: ForecastConverter
 ) {
+    fun getForecastFromLastLocation(): Flow<Result<List<Forecast>>> = flow {
+        val lastLocation = localDataSource.loadLastLocation()
+        if (lastLocation != null) {
+            emitAll(getForecast(lastLocation))
+        } else {
+            emit(Result.failure(IllegalStateException("No locations saved!")))
+        }
+    }
+
     fun getForecast(location: Location): Flow<Result<List<Forecast>>> = flow {
         remoteDataSource.getForecast(location).let {
             forecastConverter.map(it)
@@ -27,7 +36,15 @@ class ForecastRepository @Inject constructor(
         emitAll(localDataSource.load(location).map { Result.success(it) })
     }.flowOn(Dispatchers.IO)
 
-    fun getLastLocation(): Flow<Location> = flow {
+    fun getLastLocation(): Flow<Location?> = flow {
         emit(localDataSource.loadLastLocation())
     }.flowOn(Dispatchers.IO)
+
+    fun getCheckForecastInBackground(): Boolean {
+        return localDataSource.getCheckForecastInBackground()
+    }
+
+    fun setCheckForecastInBackground(check: Boolean) {
+        localDataSource.setCheckForecastInBackground(check)
+    }
 }

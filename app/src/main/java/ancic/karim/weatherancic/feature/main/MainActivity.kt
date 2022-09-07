@@ -8,6 +8,8 @@ import android.app.SearchManager
 import android.database.MatrixCursor
 import android.os.Bundle
 import android.provider.BaseColumns
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.CursorAdapter
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -30,6 +32,22 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp() || super.onSupportNavigateUp()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        menu.findItem(R.id.menu_check_forecast).isChecked = viewModel.checkForecastInBackground
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.menu_check_forecast -> {
+                item.isChecked = !item.isChecked
+                viewModel.setCheckForecastInBackground(item.isChecked)
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

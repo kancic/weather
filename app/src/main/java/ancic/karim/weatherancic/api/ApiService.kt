@@ -6,7 +6,7 @@ import retrofit2.http.Query
 import java.time.LocalDate
 
 interface ApiService {
-    @GET("forecast?current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto")
+    @GET("forecast?current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=auto&hourly=precipitation")
     suspend fun getForecast(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
