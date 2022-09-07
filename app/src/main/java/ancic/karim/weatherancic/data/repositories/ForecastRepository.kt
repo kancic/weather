@@ -26,4 +26,8 @@ class ForecastRepository @Inject constructor(
         emit(Result.failure(it))
         emitAll(localDataSource.load(location).map { Result.success(it) })
     }.flowOn(Dispatchers.IO)
+
+    fun getLastLocation(): Flow<Location> = flow {
+        emit(localDataSource.loadLastLocation())
+    }.flowOn(Dispatchers.IO)
 }

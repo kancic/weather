@@ -45,7 +45,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController)
 
         locationUtil.getLocation().nonNull().observe(this) {
-            viewModel.location.value = it
+            if (viewModel.location.value == null) {
+                viewModel.location.value = it
+            }
         }
 
         setupSearchCityInput()
@@ -71,11 +73,13 @@ class MainActivity : AppCompatActivity() {
             setOnSuggestionListener(object : SearchView.OnSuggestionListener {
                 override fun onSuggestionSelect(position: Int): Boolean {
                     viewModel.selectSuggestion(position)
+                    clearFocus()
                     return true
                 }
 
                 override fun onSuggestionClick(position: Int): Boolean {
                     viewModel.selectSuggestion(position)
+                    clearFocus()
                     return true
                 }
 

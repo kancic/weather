@@ -1,6 +1,7 @@
 package ancic.karim.weatherancic.feature.main
 
 import ancic.karim.weatherancic.data.repositories.ForecastRepository
+import ancic.karim.weatherancic.extensions.nonNull
 import android.app.Application
 import android.location.Address
 import android.location.Geocoder
@@ -20,16 +21,21 @@ class MainViewModel @Inject constructor(application: Application, repository: Fo
 
     val location = MutableLiveData<Location?>()
     val city = MutableLiveData<String?>()
-    val citySuggestions = addressSuggestions.map { it.map { it.locality }.filterNotNull() }
-    val forecast = location.asFlow().filterNotNull().distinctUntilChanged().flatMapConcat {
-        repository.getForecast(it)
-    }.asLiveData()
+    val citySuggestions = addressSuggestions.map { it.mapNotNull { it.locality } }.distinctUntilChanged()
+    val forecast = location.nonNull().distinctUntilChanged().switchMap {
+        repository.getForecast(it).asLiveData()
+    }
 
     init {
+        repository.getLastLocation().onEach {
+            location.value = it
+        }.launchIn(viewModelScope)
         location.asFlow().filterNotNull().distinctUntilChanged().map {
             Geocoder(application).getFromLocation(it.latitude, it.longitude, 1)
         }.map { it.firstOrNull() }.flowOn(Dispatchers.IO).filterNotNull().onEach {
             city.value = it.locality
+        }.catch {
+            city.value = "${location.value?.latitude} ${location.value?.longitude}"
         }.launchIn(viewModelScope)
     }
 

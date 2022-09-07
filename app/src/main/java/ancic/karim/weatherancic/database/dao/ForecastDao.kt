@@ -12,6 +12,9 @@ interface ForecastDao {
     @Query("SELECT * FROM forecast WHERE ABS(latitude - :latitude) < :delta AND ABS(longitude - :longitude) < :delta")
     fun load(latitude: Double, longitude: Double, delta: Double = 0.5): Flow<List<Forecast>>
 
+    @Query("SELECT * FROM forecast LIMIT 1")
+    fun load(): Forecast
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(forecast: List<Forecast>)
 
