@@ -1,9 +1,9 @@
 package ancic.karim.weatherancic.feature.forecast
 
 import ancic.karim.weatherancic.R
+import ancic.karim.weatherancic.data.models.local.Forecast
 import ancic.karim.weatherancic.databinding.ItemForecastBinding
 import ancic.karim.weatherancic.extensions.capitalize
-import ancic.karim.weatherancic.models.local.Weather
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -12,7 +12,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class ForecastAdapter(private var items: List<Weather>) : RecyclerView.Adapter<ForecastViewHolder>() {
+class ForecastAdapter(private var items: List<Forecast>) : RecyclerView.Adapter<ForecastViewHolder>() {
 
     init {
         setHasStableIds(true)
@@ -32,7 +32,7 @@ class ForecastAdapter(private var items: List<Weather>) : RecyclerView.Adapter<F
         holder.onBind(items[position])
     }
 
-    fun update(items: List<Weather>) {
+    fun update(items: List<Forecast>) {
         this.items = items
         notifyDataSetChanged()
     }
@@ -42,8 +42,8 @@ class ForecastViewHolder(private val binding: ItemForecastBinding) : RecyclerVie
     private val context = binding.root.context
     private val datePattern = "dd.MM.yyyy."
 
-    fun onBind(item: Weather) {
-        binding.labelDate.text = getFormattedDate(LocalDate.parse(item.date))
+    fun onBind(item: Forecast) {
+        binding.labelDate.text = getFormattedDate(item.date)
         binding.labelCurrentTemperature.apply {
             text = context.getString(R.string.forecast_label_current_temperature, item.temperatureNow)
             isVisible = !item.temperatureNow.isNullOrEmpty()

@@ -1,4 +1,4 @@
-package ancic.karim.weatherancic.models.converters.base
+package ancic.karim.weatherancic.data.models.converters.base
 
 interface RemoteToLocalConverter<REMOTE, LOCAL> {
     fun map(remote: REMOTE): LOCAL

@@ -1,4 +1,4 @@
-package ancic.karim.weatherancic.models.remote
+package ancic.karim.weatherancic.data.models.remote
 
 import com.google.gson.annotations.SerializedName
 

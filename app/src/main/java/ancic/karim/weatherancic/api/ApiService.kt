@@ -1,6 +1,6 @@
 package ancic.karim.weatherancic.api
 
-import ancic.karim.weatherancic.models.remote.ForecastResponse
+import ancic.karim.weatherancic.data.models.remote.ForecastResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 import java.time.LocalDate

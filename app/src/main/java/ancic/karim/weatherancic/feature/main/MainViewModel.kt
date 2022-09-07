@@ -1,5 +1,6 @@
 package ancic.karim.weatherancic.feature.main
 
+import ancic.karim.weatherancic.data.repositories.ForecastRepository
 import android.app.Application
 import android.location.Address
 import android.location.Geocoder
@@ -13,7 +14,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MainViewModel @Inject constructor(application: Application, repository: MainRepository) : ViewModel() {
+class MainViewModel @Inject constructor(application: Application, repository: ForecastRepository) : ViewModel() {
     private val geocoder = Geocoder(application)
     private val addressSuggestions = MutableLiveData<List<Address>>()
 
@@ -35,7 +36,11 @@ class MainViewModel @Inject constructor(application: Application, repository: Ma
     fun searchCity(city: String) {
         viewModelScope.launch(Dispatchers.IO) {
             addressSuggestions.postValue(if (city.isNotEmpty()) {
-                geocoder.getFromLocationName(city, 4).filter { it.locality?.contains(city, ignoreCase = true) == true }
+                try {
+                    geocoder.getFromLocationName(city, 4).filter { it.locality?.contains(city, ignoreCase = true) == true }
+                } catch (e: Exception) {
+                    emptyList()
+                }
             } else {
                 emptyList()
             })

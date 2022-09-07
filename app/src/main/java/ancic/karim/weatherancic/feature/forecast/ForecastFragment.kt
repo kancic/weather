@@ -1,9 +1,9 @@
 package ancic.karim.weatherancic.feature.forecast
 
 import ancic.karim.weatherancic.R
+import ancic.karim.weatherancic.data.models.local.Forecast
 import ancic.karim.weatherancic.databinding.FragmentForecastBinding
 import ancic.karim.weatherancic.feature.main.MainViewModel
-import ancic.karim.weatherancic.models.local.Forecast
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -40,13 +40,13 @@ class ForecastFragment : Fragment() {
         }
     }
 
-    private fun setupForecast(forecast: Forecast) {
+    private fun setupForecast(forecast: List<Forecast>) {
         var adapter = binding.recyclerView.adapter as? ForecastAdapter
         if (adapter == null) {
-            adapter = ForecastAdapter(forecast.dailyWeather)
+            adapter = ForecastAdapter(forecast)
             binding.recyclerView.adapter = adapter
         } else {
-            adapter.update(forecast.dailyWeather)
+            adapter.update(forecast)
         }
     }
 }
